@@ -1,4 +1,3 @@
-// utils/weatherUtils.ts
 import sunnyIcon from "../assets/weather/sunny.png";
 import cloudyIcon from "../assets/weather/cloudy.png";
 import rainyIcon from "../assets/weather/rainy.png";
@@ -24,6 +23,5 @@ export function getWeatherInfo(weathercode: number): WeatherInfo {
   if ([71, 73, 75, 77, 85, 86].includes(weathercode)) return { description: "Nieve", icon: snowyIcon, background: snowyBg };
   if ([95, 96, 99].includes(weathercode)) return { description: "Tormenta", icon: stormIcon, background: stormBg };
 
-  // fallback
   return { description: "Soleado", icon: sunnyIcon, background: sunnyBg };
 }

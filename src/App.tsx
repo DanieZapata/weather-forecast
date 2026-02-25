@@ -18,12 +18,12 @@ function App() {
     }
   }, [current]);
 
-  const bgImage = current ? getWeatherInfo(current.weathercode).background : "null";
+  const weatherInfo = current && forecast.length > 0 ? getWeatherInfo(forecast[0].weathercode) : getWeatherInfo(0);
 
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat p-6"
-      style={{ backgroundImage: `url(${bgImage})` }}
+      style={{ backgroundImage: `url(${weatherInfo?.background})` }}
     >
       <SearchCity onSearch={searchCity} />
 
@@ -38,6 +38,7 @@ function App() {
           city={city}
           data={current}
           todayForecast={forecast[0]}
+          weatherInfo={weatherInfo}
         />
       )}
       {forecast.length > 0 && <Forecast forecast={forecast} />}
