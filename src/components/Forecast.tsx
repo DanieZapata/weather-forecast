@@ -1,4 +1,5 @@
 import type { DailyForecast } from "../types/weather";
+import { getWeatherInfo } from "../utils/weatherUtils";
 
 interface Props {
     forecast: DailyForecast[];
@@ -21,47 +22,41 @@ export function Forecast({ forecast }: Props) {
         return { day, formattedDate };
     };
 
-    const getWeatherImage = (weathercode: number) => {
-        if (weathercode === 0) return "/src/assets/weather/sunny.png";
-        if (weathercode >= 1 && weathercode <= 3) return "/src/assets/weather/cloudy.png";
-        if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weathercode)) return "/src/assets/weather/rainy.png";
-        if ([71, 73, 75, 77, 85, 86].includes(weathercode)) return "/src/assets/weather/snowy.png";
-        if ([95, 96, 99].includes(weathercode)) return "/src/assets/weather/storm.png";
-        return "/src/assets/weather/sunny.png";
-    };
-
     return (
-        <div className="mt-28 flex flex-col sm:flex-row flex-wrap justify-between gap-4">
-            {forecast.map((day) => {
-                const { day: weekday, formattedDate } = formatDate(day.date);
-                const weatherImage = getWeatherImage(day.weathercode);
+        <div className="mt-6">
+           {/* <h3 className="uppercase font-thin text-4xl mb-6 text-left text-white">Pronóstico para los próximos días</h3> */}
+            <div className="mt-2 flex flex-col sm:flex-row flex-wrap justify-between gap-4">
+                {forecast.map((day) => {
+                    const { day: weekday, formattedDate } = formatDate(day.date);
+                    const weatherImage = getWeatherInfo(day.weathercode);
 
-                return (
-                    <div
-                        key={day.date}
-                        className="border rounded-lg p-4 flex flex-col items-center text-center flex-1 max-w-xs">
+                    return (
+                        <div
+                            key={day.date}
+                            className="bg-gray-950 bg-opacity-25 rounded-lg p-4 flex flex-col items-center text-center text-white flex-1 max-w-xs">
 
-                        <p className="capitalize font-semibold text-lg">
-                            {weekday}
-                        </p>
+                            <p className="uppercase font-thin text-3xl text-white">
+                                {weekday}
+                            </p>
 
-                        <p className="text-sm text-gray-500">
-                            {formattedDate}
-                        </p>
+                            <p className="text-sm text-white">
+                                {formattedDate}
+                            </p>
 
-                        <img
-                            src={weatherImage}
-                            alt="Weather icon"
-                            className="w-26 h-26 mt-2"
-                        />
+                            <img
+                                src={weatherImage.icon}
+                                alt="Weather icon"
+                                className="w-26 h-26 mt-2"
+                            />
 
-                        <div className="mt-3">
-                            <p>Temp Máx: {day.tempMax}°C</p>
-                            <p>Temp Mín: {day.tempMin}°C</p>
+                            <div className="mt-3">
+                                <p>Temp Máx: {day.tempMax}°C</p>
+                                <p>Temp Mín: {day.tempMin}°C</p>
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
 }
