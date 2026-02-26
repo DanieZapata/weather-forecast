@@ -48,11 +48,8 @@ export function useWeather() {
   };
 
   useEffect(() => {
-    const savedCity = localStorage.getItem("lastCity");
-
-    if (savedCity) {
-      searchCity(savedCity);
-    }
+    const savedCity = localStorage.getItem("lastCity") || "La Paz";
+    searchCity(savedCity);
   }, []);
 
   return { city, current, forecast, loading, error, searchCity };
