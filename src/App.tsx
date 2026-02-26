@@ -20,7 +20,8 @@ function App() {
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat p-6"
       style={{ backgroundImage: `url(${weatherInfo?.background})` }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="absolute inset-0 bg-black/40 p-8" >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
 
         <div>
           {current && forecast.length > 0 && (
@@ -55,6 +56,7 @@ function App() {
           <Forecast forecast={forecast} />
         </div>
       )}
+    </div>
     </div>
   );
 }
