@@ -1,21 +1,49 @@
+import { useEffect, useState } from "react";
+import { CheckCircle, XCircle } from "lucide-react";
+
 interface Props {
+  type: "loading" | "error" | "success";
   message: string;
-  type?: "error" | "success" | "loading";
 }
 
-export function Message({ message, type = "loading" }: Props) {
-  const bgColor =
-    type === "error"
-      ? "bg-red-100 text-red-700 border-red-400"
-      : type === "success"
-      ? "bg-green-100 text-green-700 border-green-400"
-      : "bg-blue-100 text-blue-700 border-blue-400";
+export function Message({ type, message }: Props) {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (type === "success" || type === "error") {
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [type]);
+
+  if (!visible) return null;
 
   return (
-    <div className={`border-l-4 ${bgColor} p-2 rounded my-4`}>
-      <p className="font-medium">
-        {type === "loading" ? "Cargando..." : message}
-      </p>
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex flex-col gap-4 items-center justify-center z-50 text-white transition-all duration-300">
+
+      {type === "loading" && (
+        <>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
+          <p className="text-lg font-light">{message}</p>
+        </>
+      )}
+
+      {type === "success" && (
+        <>
+          <CheckCircle size={48} className="opacity-90" />
+          <p className="text-lg font-light">{message}</p>
+        </>
+      )}
+
+      {type === "error" && (
+        <>
+          <XCircle size={48} className="opacity-90" />
+          <p className="text-lg font-light">{message}</p>
+        </>
+      )}
     </div>
   );
 }

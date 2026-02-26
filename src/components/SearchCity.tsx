@@ -11,7 +11,7 @@ export function SearchCity({ onSearch }: Props) {
         <div>
             <div className="flex mx-auto gap-2">
                 <input
-                    className="flex-1 rounded-lg bg-gray-950 bg-opacity-50 p-1 text-white placeholder:text-white-400 focus:outline-none"
+                    className="flex-1 rounded-lg bg-gray-950 bg-opacity-25 p-1 text-white placeholder:text-white focus:outline-none"
                     placeholder="Buscar ciudad"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
