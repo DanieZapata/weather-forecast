@@ -44,23 +44,23 @@ https://weather-forecast-flame-tau.vercel.app/
 
 Escribe el nombre de la ciudad en el buscador y al presionar en el botón "Buscar" la app mostrará:
         
-        Ciudad
+- Ciudad
         
-        Temperatura
+- Temperatura
         
-        Pronóstico del día
+- Pronóstico del día
         
-        Viento
+- Viento
 
 Mientras atiende cualquier solicitud muestra mensajes automáticos como:
         
-        Cargando datos del clima...
+- Cargando datos del clima...
+
+- Ciudad encontrada
         
-        Ciudad encontrada
+- Ciudad no encontrada 
         
-        Ciudad no encontrada 
-        
-        Problemas de red 
+- Problemas de red 
 
 Tambien la última ciudad buscada se guarda automáticamente y se carga al abrir la app nuevamente.
 
@@ -74,13 +74,13 @@ Llama a useWeather y gestiona los componentes: SearchCity, CurrentWeather, Forec
 
 Función searchCity(cityName):
         
-        Consulta coordenadas con getCityCoordinates.
+- Consulta coordenadas con getCityCoordinates.
         
-        Consulta clima con getWeather.
+- Consulta clima con getWeather.
         
-        Guarda la última ciudad en localStorage.
+- Guarda la última ciudad en localStorage.
         
-        Actualiza estados: city, current, forecast, loading y error.
+- Actualiza estados: city, current, forecast, loading y error.
 
 useEffect carga automáticamente la última ciudad desde localStorage al iniciar. Si no hay ciudad guardada, se puede establecer una ciudad por defecto en este caso es **La Paz** para mostrar datos iniciales y fondo visual en la UI.
 
