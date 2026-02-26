@@ -24,8 +24,8 @@ export function Forecast({ forecast }: Props) {
 
     return (
         <div className="mt-6">
-           {/* <h3 className="uppercase font-thin text-4xl mb-6 text-left text-white">Pronóstico para los próximos días</h3> */}
-            <div className="mt-2 flex flex-col sm:flex-row flex-wrap justify-between gap-4">
+            {/* <h3 className="uppercase font-thin text-4xl mb-6 text-left text-white">Pronóstico para los próximos días</h3> */}
+            <div className="mt-2 flex flex-col sm:flex-row sm:flex-wrap sm:justify-between justify-center gap-4">
                 {forecast.map((day) => {
                     const { day: weekday, formattedDate } = formatDate(day.date);
                     const weatherImage = getWeatherInfo(day.weathercode);
@@ -33,8 +33,8 @@ export function Forecast({ forecast }: Props) {
                     return (
                         <div
                             key={day.date}
-                            className="bg-gray-950 bg-opacity-25 rounded-lg p-4 flex flex-col items-center text-center text-white flex-1 max-w-xs">
-
+                            className="bg-gray-950 bg-opacity-25 rounded-lg p-4 flex flex-col items-center text-center text-white max-w-xs sm:flex-1 sm:max-w-none mx-auto"
+                        >
                             <p className="uppercase font-thin text-3xl text-white">
                                 {weekday}
                             </p>
