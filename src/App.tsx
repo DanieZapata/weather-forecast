@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useWeather } from "./hooks/useWeather";
 import { SearchCity } from "./components/SearchCity";
 import { CurrentWeather } from "./components/CurrentWeather";
@@ -8,10 +7,12 @@ import { getWeatherInfo } from "./utils/weatherUtils";
 
 function App() {
   const { city, current, forecast, loading, error, searchCity } = useWeather();
-
-  useEffect(() => {
-    searchCity("La Paz");
-  }, []);
+  const errorMessages: Record<string, string> = {
+    CITY_NOT_FOUND: "Ciudad no encontrada",
+    NETWORK_ERROR: "Problemas de red. Verifica tu conexión.",
+    FETCH_ERROR: "Error al obtener datos del clima.",
+    UNKNOWN_ERROR: "Ocurrió un error inesperado."
+  };
 
   const weatherInfo = current && forecast.length > 0 ? getWeatherInfo(forecast[0].weathercode) : getWeatherInfo(0);
 
@@ -32,7 +33,7 @@ function App() {
             )}
 
             {!loading && error && (
-              <Message type="error" message="Ciudad no encontrada" />
+              <Message type="error" message={errorMessages[error]} />
             )}
 
             {!loading && !error && current && (

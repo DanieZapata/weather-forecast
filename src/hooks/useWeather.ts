@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCityCoordinates, getWeather } from "../services/weatherAPI";
 import type { CurrentWeather, DailyForecast } from "../types/weather";
 
@@ -18,6 +18,7 @@ export function useWeather() {
       const data = await getWeather(geo.latitude, geo.longitude);
 
       setCity(geo.name);
+      localStorage.setItem("lastCity", geo.name);
 
       setCurrent({
         temperature: data.current_weather.temperature,
@@ -35,12 +36,24 @@ export function useWeather() {
         .slice(0, 7);
 
       setForecast(dailyForecast);
-    } catch (err: any) {
-      setError(err.message || "Error al obtener el clima");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("UNKNOWN_ERROR");
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const savedCity = localStorage.getItem("lastCity");
+
+    if (savedCity) {
+      searchCity(savedCity);
+    }
+  }, []);
 
   return { city, current, forecast, loading, error, searchCity };
 }
