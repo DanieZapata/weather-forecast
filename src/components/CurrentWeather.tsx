@@ -14,26 +14,35 @@ export function CurrentWeather({ city, data, todayForecast, weatherInfo }: Props
   const formattedDate = new Intl.DateTimeFormat("es-ES", { day: "2-digit" }).format(date);
 
   return (
-    <div className="mt-4 py-4 mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+    <div className="mt-4 py-4 w-full flex flex-col items-center md:items-start">
 
-      <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col">
-            <h2 className="uppercase text-6xl font-thin text-white">{city}</h2>
-            <p className="uppercase text-2xl font-thin text-white">{`${formattedDay} ${formattedDate}`}</p>
-            <p className="uppercase mt-2 font-thin text-2xl text-white">{weatherInfo.description}</p>
-          </div>
+      <h2 className="uppercase text-5xl md:text-6xl font-thin text-white mb-4 text-center md:text-right">
+        {city}
+      </h2>
 
-          <div className="flex flex-col md:flex-row md:gap-6 mt-2">
-            <p className="text-lg font-thin text-white">
-              Temperatura: <span className="font-semibold text-white">{data.temperature}°C</span>
-            </p>
-            <p className="text-lg font-thin text-white">
-              Viento: <span className="font-semibold text-white">{data.windspeed} km/h</span>
-            </p>
-          </div>
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+
+        <h1 className="text-6xl md:text-8xl font-extralight text-white tracking-tight leading-none">
+          {data.temperature}
+          <span className="text-4xl md:text-6xl align-top">°C</span>
+        </h1>
+
+        <div className="flex flex-col text-center md:text-left mt-2">
+          <p className="uppercase text-lg md:text-xl font-thin text-white">
+            {`${formattedDay} ${formattedDate}`}
+          </p>
+
+          <p className="uppercase text-lg md:text-xl font-thin text-white mt-1">
+            {weatherInfo.description}
+          </p>
+
+          <p className="uppercase text-lg font-thin text-white mt-1">
+            Viento: <span className="font-semibold">{data.windspeed} km/h</span>
+          </p>
         </div>
+
       </div>
+
     </div>
   );
 }
