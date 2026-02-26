@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# 🌤️ Weather Forecast App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para consultar el clima actual y pronóstico de 7 días de cualquier ciudad.
+Incluye manejo de errores claros y persistencia de la última ciudad buscada para mejorar la experiencia del usuario.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Node.js ≥ 18
+npm ≥ 9 o yarn ≥ 1.22
+Conexión a internet para acceder a la API de Open-Meteo
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Instalación 
 
-## Expanding the ESLint configuration
+```bash
+# Clonar el repositorio
+git clone https://github.com/DanieZapata/weather-forecast.git
+cd weather-forecast-app
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Instalar dependencias
+npm install
+# o
+yarn install
+```
+## Ejecución
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Ejecutar la aplicación en modo desarrollo
+npm run dev
+# o
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+La app estará disponible en http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Despliegue
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+La aplicación está publicada en Vercel y puedes acceder a ella desde el siguiente enlace:
+https://weather-forecast-flame-tau.vercel.app/
+
+## Uso
+
+Escribe el nombre de la ciudad en el buscador y al presionar en el botón "Buscar" la app mostrará:
+        Ciudad
+        Temperatura
+        Pronóstico del día
+        Viento
+
+Mientras atiende cualquier solicitud muestra mensajes automáticos como:
+        Cargando datos del clima...
+        Ciudad encontrada
+        Ciudad no encontrada 
+        Problemas de red 
+
+Tambien la última ciudad buscada se guarda automáticamente y se carga al abrir la app nuevamente.
+
+## Flujo de Aplicación
+
+### Componente App.tsx
+
+Llama a useWeather y gestiona los componentes: SearchCity, CurrentWeather, Forecast, Message.
+
+### Hook useWeather
+
+Función searchCity(cityName):
+        Consulta coordenadas con getCityCoordinates.
+        Consulta clima con getWeather.
+        Guarda la última ciudad en localStorage.
+        Actualiza estados: city, current, forecast, loading y error.
+useEffect carga automáticamente la última ciudad desde localStorage al iniciar.
+
+### Componentes de UI
+
+CurrentWeather: muestra clima actual.
+Forecast: muestra pronóstico de 7 días.
+Message: muestra mensajes de carga, éxito o error.
+
+### Manejo de errores
+
+CITY_NOT_FOUND → ciudad no encontrada.
+NETWORK_ERROR → problema de conexión.
+FETCH_ERROR → error en respuesta de la API.
+UNKNOWN_ERROR → cualquier otro error inesperado.
+
+## Decisiones Técnicas
+
+React + TypeScript: tipos seguros y modularidad.
+Tailwind CSS: diseño rápido y responsivo.
+Lucide React: íconos vectoriales limpios, reemplaza íconos que generaban ruido visual y mantiene consistencia en la UI.
+Hooks personalizados (useWeather): centralizan la lógica de la API y el estado del clima.
+LocalStorage: persistencia de la última ciudad buscada para mejor experiencia del usuario.
+Mensajes dinámicos: diferenciación clara entre errores de ciudad y problemas de red.
+
+## Notas Finales
+
+La app no requiere backend; todo se consume desde la API de Open-Meteo.
+El fondo de la app cambia según el clima actual.
+La temperatura y el pronóstico se actualizan automáticamente al buscar una ciudad nueva.
