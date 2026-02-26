@@ -3,6 +3,8 @@
 Aplicación web para consultar el clima actual y pronóstico de 7 días de cualquier ciudad.
 Incluye manejo de errores claros y persistencia de la última ciudad buscada para mejorar la experiencia del usuario.
 
+![alt text](image.png)
+
 ## Requisitos
 
 Node.js ≥ 18
